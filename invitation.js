@@ -106,7 +106,17 @@ const countdownParts = now => {
 };
 const updateCountdown = () => {
   const parts = countdownParts(Date.now());
-  for (const unit of ['days', 'hours', 'minutes', 'seconds']) put(`count-${unit}`, String(parts[unit]).padStart(2, '0'));
+  for (const unit of ['days', 'hours', 'minutes', 'seconds']) {
+    const digit = document.getElementById(`count-${unit}`);
+    const value = String(parts[unit]).padStart(2, '0');
+    if (digit && digit.textContent !== value) {
+      digit.textContent = value;
+      if (!reducedMotion.matches) {
+        digit.classList.remove('digit-change');
+        requestAnimationFrame(() => digit.classList.add('digit-change'));
+      }
+    }
+  }
   if (!parts.remaining) put('countdown-note', '¡Llegó el gran día! Gracias por acompañarme.');
 };
 if (Number.isFinite(countdownTarget)) {
@@ -115,4 +125,26 @@ if (Number.isFinite(countdownTarget)) {
     updateCountdown();
     if (Date.now() >= countdownTarget) clearInterval(countdownInterval);
   }, 1000);
+}
+
+// Movimiento muy ligero de los adornos florales durante el recorrido.
+if (!reducedMotion.matches) {
+  const parallaxDecorations = [...document.querySelectorAll('[data-parallax]')];
+  let parallaxFrame = 0;
+  const updateParallax = () => {
+    const viewportMiddle = window.innerHeight / 2;
+    parallaxDecorations.forEach(decoration => {
+      const rect = decoration.parentElement.getBoundingClientRect();
+      const distance = rect.top + rect.height / 2 - viewportMiddle;
+      const speed = Number(decoration.dataset.parallax) || 0;
+      decoration.style.setProperty('--parallax-y', `${Math.max(-24, Math.min(24, -distance * speed))}px`);
+    });
+    parallaxFrame = 0;
+  };
+  const requestParallax = () => {
+    if (!parallaxFrame) parallaxFrame = requestAnimationFrame(updateParallax);
+  };
+  updateParallax();
+  addEventListener('scroll', requestParallax, { passive: true });
+  addEventListener('resize', requestParallax, { passive: true });
 }
