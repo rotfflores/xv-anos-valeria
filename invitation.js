@@ -56,6 +56,9 @@ const nameInput = document.getElementById('guest-name');
 const attendanceInput = document.getElementById('attendance');
 const countInput = document.getElementById('guest-count');
 const countField = document.getElementById('guest-count-field');
+const guestNames = document.getElementById('guest-names');
+const messageInput = document.getElementById('guest-message');
+const thankYou = document.getElementById('thank-you');
 
 const launchFireworks = () => {
   if (reducedMotion.matches) return;
@@ -132,10 +135,35 @@ for (let n = 1; n <= passes; n++) {
 }
 countInput.value = String(passes);
 put('pass-help', `Puedes confirmar hasta ${passes} ${passes === 1 ? 'persona' : 'personas'} con este pase.`);
+const renderGuestInputs = (count, values = []) => {
+  const currentValues = [...guestNames.querySelectorAll('input')].map(input => input.value);
+  guestNames.replaceChildren();
+  for (let number = 2; number <= count; number += 1) {
+    const field = document.createElement('div');
+    field.className = 'guest-name-field';
+    const label = document.createElement('label');
+    label.htmlFor = `guest-name-${number}`;
+    label.textContent = `Nombre de la persona ${number}`;
+    const input = document.createElement('input');
+    input.id = `guest-name-${number}`;
+    input.name = `guest-${number}`;
+    input.autocomplete = 'name';
+    input.required = true;
+    input.maxLength = 100;
+    input.placeholder = 'Escribe el nombre completo';
+    input.value = values[number - 2] || currentValues[number - 2] || '';
+    input.addEventListener('input', () => input.setCustomValidity(''));
+    field.append(label, input);
+    guestNames.appendChild(field);
+  }
+};
+renderGuestInputs(passes);
+countInput.addEventListener('change', () => renderGuestInputs(Number(countInput.value)));
 const updateAttendance = () => {
   const attending = attendanceInput.value === 'yes';
   countField.hidden = !attending;
   countInput.disabled = !attending;
+  guestNames.querySelectorAll('input').forEach(input => { input.disabled = !attending; });
 };
 attendanceInput.addEventListener('change', updateAttendance);
 const invitationId = new URLSearchParams(window.location.search).get('invitacion') || 'general';
@@ -145,7 +173,11 @@ try {
   if (saved && typeof saved.name === 'string' && ['yes', 'no'].includes(saved.attendance) && Number.isInteger(saved.count) && saved.count >= 0 && saved.count <= passes) {
     nameInput.value = saved.name;
     attendanceInput.value = saved.attendance;
-    if (saved.count > 0) countInput.value = String(saved.count);
+    if (saved.count > 0) {
+      countInput.value = String(saved.count);
+      renderGuestInputs(saved.count, Array.isArray(saved.guests) ? saved.guests.slice(1) : []);
+    }
+    if (typeof saved.message === 'string') messageInput.value = saved.message;
     put('confirmation-status', 'Tienes una respuesta guardada en este navegador. Puedes modificarla; aún no se ha enviado a la anfitriona.');
   }
 } catch { /* El formulario sigue disponible si no hay almacenamiento local. */ }
@@ -160,9 +192,25 @@ form.addEventListener('submit', e => {
     put('confirmation-status', 'Selecciona una cantidad válida dentro de los pases asignados.');
     return;
   }
+  const additionalInputs = [...guestNames.querySelectorAll('input')];
+  const guests = attendanceInput.value === 'yes' ? [nameInput.value.trim(), ...additionalInputs.map(input => input.value.trim())] : [nameInput.value.trim()];
+  const emptyGuest = additionalInputs.find(input => !input.value.trim());
+  additionalInputs.forEach(input => input.setCustomValidity(input.value.trim() ? '' : 'Escribe el nombre completo.'));
+  if (attendanceInput.value === 'yes' && emptyGuest) {
+    emptyGuest.reportValidity();
+    emptyGuest.focus();
+    return;
+  }
   try {
-    localStorage.setItem(storageKey, JSON.stringify({ name: nameInput.value.trim(), attendance: attendanceInput.value, count, passes, updatedAt: new Date().toISOString() }));
+    localStorage.setItem(storageKey, JSON.stringify({ name: nameInput.value.trim(), guests, attendance: attendanceInput.value, count, passes, message: messageInput.value.trim(), updatedAt: new Date().toISOString() }));
     put('confirmation-status', count ? `Respuesta guardada en este navegador para ${count} ${count === 1 ? 'persona' : 'personas'}. Aún no se envía a la anfitriona.` : 'Tu respuesta de que no podrás asistir se guardó en este navegador. Aún no se envía a la anfitriona.');
+    put('thank-you-copy', count ? `Gracias, ${nameInput.value.trim()}. Será una alegría compartir este día con ${count === 1 ? 'contigo' : 'ustedes'}.` : `Gracias por avisarnos, ${nameInput.value.trim()}. Agradecemos mucho tu respuesta.`);
+    thankYou.hidden = false;
+    thankYou.classList.remove('is-visible');
+    void thankYou.offsetWidth;
+    thankYou.classList.add('is-visible');
+    thankYou.focus({ preventScroll: true });
+    thankYou.scrollIntoView({ behavior: reducedMotion.matches ? 'auto' : 'smooth', block: 'center' });
   } catch {
     put('confirmation-status', 'No fue posible guardar tu respuesta en este navegador. Inténtalo de nuevo con el almacenamiento local habilitado.');
   }

@@ -278,14 +278,17 @@
       <div class="guest-pass" id="guest-pass"><span>Mis XV · Valeria Reyna Ruiz</span><p>Pase válido para <strong id="pass-count">2 personas</strong></p><small>30 de octubre de 2026</small></div>
       <button class="button accept-invitation" id="accept-invitation" type="button" aria-controls="rsvp-form" aria-expanded="false"><span aria-hidden="true">✦</span> Aceptar la invitación <span aria-hidden="true">✦</span></button>
       <form id="rsvp-form" class="rsvp-form" hidden>
-        <label for="guest-name">Tu nombre completo</label>
-        <input id="guest-name" name="name" autocomplete="name" required maxlength="100" placeholder="Escribe tu nombre">
+        <label for="guest-name">Nombre de la persona 1</label>
+        <input id="guest-name" name="name" autocomplete="name" required maxlength="100" placeholder="Escribe el nombre completo">
         <label for="attendance">¿Nos acompañarás?</label>
         <select id="attendance" name="attendance" required><option value="yes">Sí, asistiré</option><option value="no">No podré asistir</option></select>
-        <div id="guest-count-field"><label for="guest-count">Personas que asistirán, incluyéndote</label><select id="guest-count" name="count" aria-describedby="pass-help"></select><p class="form-help" id="pass-help"></p></div>
+        <div id="guest-count-field"><label for="guest-count">Personas que asistirán, incluyéndote</label><select id="guest-count" name="count" aria-describedby="pass-help"></select><p class="form-help" id="pass-help"></p><div class="guest-names" id="guest-names"></div></div>
+        <label for="guest-message">Mensaje para Valeria <span class="optional-label">Opcional</span></label>
+        <textarea id="guest-message" name="message" maxlength="500" rows="4" placeholder="Escribe unas palabras para Valeria"></textarea>
         <button type="submit" class="button confirmation-button">Guardar mi respuesta</button>
       </form>
       <noscript><style>#rsvp-form{display:block!important}.accept-invitation{display:none!important}</style></noscript>
+      <div class="thank-you" id="thank-you" role="status" tabindex="-1" hidden><span aria-hidden="true">✦</span><h3>¡Gracias por responder!</h3><p id="thank-you-copy"></p></div>
       <p class="secondary" id="confirmation-status" role="status">Esta respuesta se guarda solo en este navegador. Aún no se envía a la anfitriona.</p>
     </section>
     <footer class="page-footer"><span class="footer-ornament" aria-hidden="true"></span><svg class="footer-butterfly" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 90" fill="none">
