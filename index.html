@@ -29,10 +29,10 @@
   <script src="invitation.js" defer></script>
 </head>
 <body>
-  <img class="floating-butterfly" src="assets/butterfly.svg" alt="" aria-hidden="true">
   <canvas class="celebration-canvas" id="celebration-canvas" aria-hidden="true"></canvas>
   <main class="page">
   <header class="invitation" aria-label="Invitación a mis quince años">
+    <div class="header-butterfly-two" aria-hidden="true"><img src="assets/butterfly.svg" alt=""></div>
     <img class="flowers top-left" src="assets/flores-superior-izquierda.png" alt="" aria-hidden="true">
     <img class="flowers top-right" src="assets/flores-superior-derecha.png" alt="" aria-hidden="true">
     <div class="butterfly-flight" aria-hidden="true"><svg class="butterfly" viewBox="0 0 100 90" aria-hidden="true" focusable="false"><defs><linearGradient id="wing-color" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffe2cf"/><stop offset=".5" stop-color="#e9918a"/><stop offset="1" stop-color="#ae514f"/></linearGradient></defs><g fill="url(#wing-color)" stroke="#bf8264" stroke-width="1"><g class="wing wing-left"><path d="M49 48C30 2 4 0 6 24c1 20 17 31 42 28C20 40 9 61 22 72c13 12 23-4 27-21Z"/><path d="M47 46 16 17m30 32L14 31m32 24L25 66" stroke="#f9d4b1"/></g><g class="wing wing-right"><path d="M51 48C70 2 96 0 94 24c-1 20-17 31-42 28 28-12 39 9 26 20-13 12-23-4-27-21Z"/><path d="m53 46 31-29M54 49l32-18M54 55l21 11" stroke="#f9d4b1"/></g></g><path d="M49 39c-1 8-1 19 1 26 2-7 2-18 1-26" fill="#a98038"/><path d="m49 39-7-12m9 12 7-12" stroke="#a98038" stroke-linecap="round"/><circle cx="50" cy="38" r="2.5" fill="#a98038"/></svg></div>
@@ -278,11 +278,10 @@
       <div class="guest-pass" id="guest-pass"><span>Mis XV · Valeria Reyna Ruiz</span><p>Pase válido para <strong id="pass-count">2 personas</strong></p><small>30 de octubre de 2026</small></div>
       <button class="button accept-invitation" id="accept-invitation" type="button" aria-controls="rsvp-form" aria-expanded="false"><span aria-hidden="true">✦</span> Aceptar la invitación <span aria-hidden="true">✦</span></button>
       <form id="rsvp-form" class="rsvp-form" hidden>
-        <label for="guest-name">Nombre de la persona 1</label>
-        <input id="guest-name" name="name" autocomplete="name" required maxlength="100" placeholder="Escribe el nombre completo">
         <label for="attendance">¿Nos acompañarás?</label>
         <select id="attendance" name="attendance" required><option value="yes">Sí, asistiré</option><option value="no">No podré asistir</option></select>
-        <div id="guest-count-field"><label for="guest-count">Personas que asistirán, incluyéndote</label><select id="guest-count" name="count" aria-describedby="pass-help"></select><p class="form-help" id="pass-help"></p><div class="guest-names" id="guest-names"></div></div>
+        <div id="guest-count-field"><label for="guest-count">Personas que asistirán, incluyéndote</label><select id="guest-count" name="count" aria-describedby="pass-help"></select><p class="form-help" id="pass-help"></p></div>
+        <div class="attendee-names" id="attendee-names"><label for="guest-name" id="primary-guest-label">Nombre de la persona 1</label><input id="guest-name" name="name" autocomplete="name" required maxlength="100" placeholder="Escribe el nombre completo"><div class="guest-names" id="guest-names"></div></div>
         <label for="guest-message">Mensaje para Valeria <span class="optional-label">Opcional</span></label>
         <textarea id="guest-message" name="message" maxlength="500" rows="4" placeholder="Escribe unas palabras para Valeria"></textarea>
         <button type="submit" class="button confirmation-button">Guardar mi respuesta</button>

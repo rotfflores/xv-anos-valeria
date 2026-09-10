@@ -56,6 +56,8 @@ const nameInput = document.getElementById('guest-name');
 const attendanceInput = document.getElementById('attendance');
 const countInput = document.getElementById('guest-count');
 const countField = document.getElementById('guest-count-field');
+const attendeeNames = document.getElementById('attendee-names');
+const primaryGuestLabel = document.getElementById('primary-guest-label');
 const guestNames = document.getElementById('guest-names');
 const messageInput = document.getElementById('guest-message');
 const thankYou = document.getElementById('thank-you');
@@ -162,6 +164,9 @@ countInput.addEventListener('change', () => renderGuestInputs(Number(countInput.
 const updateAttendance = () => {
   const attending = attendanceInput.value === 'yes';
   countField.hidden = !attending;
+  guestNames.hidden = !attending;
+  primaryGuestLabel.textContent = attending ? 'Nombre de la persona 1' : 'Tu nombre completo';
+  attendeeNames.classList.toggle('is-declining', !attending);
   countInput.disabled = !attending;
   guestNames.querySelectorAll('input').forEach(input => { input.disabled = !attending; });
 };
