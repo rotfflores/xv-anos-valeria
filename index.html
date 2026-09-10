@@ -29,6 +29,8 @@
   <script src="invitation.js" defer></script>
 </head>
 <body>
+  <img class="floating-butterfly" src="assets/butterfly.svg" alt="" aria-hidden="true">
+  <canvas class="celebration-canvas" id="celebration-canvas" aria-hidden="true"></canvas>
   <main class="page">
   <header class="invitation" aria-label="Invitación a mis quince años">
     <img class="flowers top-left" src="assets/flores-superior-izquierda.png" alt="" aria-hidden="true">
@@ -274,7 +276,8 @@
       <h2 class="section-title" id="confirmation-title">¿Me acompañas?</h2>
       <p class="section-intro">Me encantará compartir esta noche contigo.</p>
       <div class="guest-pass" id="guest-pass"><span>Mis XV · Valeria Reyna Ruiz</span><p>Pase válido para <strong id="pass-count">2 personas</strong></p><small>30 de octubre de 2026</small></div>
-      <form id="rsvp-form" class="rsvp-form">
+      <button class="button accept-invitation" id="accept-invitation" type="button" aria-controls="rsvp-form" aria-expanded="false"><span aria-hidden="true">✦</span> Aceptar la invitación <span aria-hidden="true">✦</span></button>
+      <form id="rsvp-form" class="rsvp-form" hidden>
         <label for="guest-name">Tu nombre completo</label>
         <input id="guest-name" name="name" autocomplete="name" required maxlength="100" placeholder="Escribe tu nombre">
         <label for="attendance">¿Nos acompañarás?</label>
@@ -282,6 +285,7 @@
         <div id="guest-count-field"><label for="guest-count">Personas que asistirán, incluyéndote</label><select id="guest-count" name="count" aria-describedby="pass-help"></select><p class="form-help" id="pass-help"></p></div>
         <button type="submit" class="button confirmation-button">Guardar mi respuesta</button>
       </form>
+      <noscript><style>#rsvp-form{display:block!important}.accept-invitation{display:none!important}</style></noscript>
       <p class="secondary" id="confirmation-status" role="status">Esta respuesta se guarda solo en este navegador. Aún no se envía a la anfitriona.</p>
     </section>
     <footer class="page-footer"><span class="footer-ornament" aria-hidden="true"></span><svg class="footer-butterfly" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 90" fill="none">

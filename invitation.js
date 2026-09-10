@@ -51,10 +51,79 @@ if ('IntersectionObserver' in window && !reducedMotion.matches) {
 }
 // Confirmación local; el panel y la base de datos se conectarán después.
 const form = document.getElementById('rsvp-form');
+const acceptButton = document.getElementById('accept-invitation');
 const nameInput = document.getElementById('guest-name');
 const attendanceInput = document.getElementById('attendance');
 const countInput = document.getElementById('guest-count');
 const countField = document.getElementById('guest-count-field');
+
+const launchFireworks = () => {
+  if (reducedMotion.matches) return;
+  const canvas = document.getElementById('celebration-canvas');
+  const context = canvas.getContext('2d');
+  if (!context) return;
+  const pixelRatio = Math.min(devicePixelRatio || 1, 2);
+  const resizeCanvas = () => {
+    canvas.width = innerWidth * pixelRatio;
+    canvas.height = innerHeight * pixelRatio;
+    canvas.style.width = `${innerWidth}px`;
+    canvas.style.height = `${innerHeight}px`;
+    context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+  };
+  resizeCanvas();
+  canvas.classList.add('is-active');
+  const colors = ['#f6c66f', '#f39a8f', '#fff3d0', '#d66e67', '#c49a5a'];
+  const particles = [];
+  const burst = (x, y, amount = 54) => {
+    for (let index = 0; index < amount; index += 1) {
+      const angle = Math.PI * 2 * index / amount + Math.random() * .12;
+      const speed = 2.1 + Math.random() * 4.8;
+      particles.push({ x, y, vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed, life: 1, decay: .012 + Math.random() * .011, size: 1.5 + Math.random() * 2.4, color: colors[index % colors.length] });
+    }
+  };
+  burst(innerWidth * .28, innerHeight * .32);
+  setTimeout(() => burst(innerWidth * .72, innerHeight * .26, 60), 180);
+  setTimeout(() => burst(innerWidth * .5, innerHeight * .46, 64), 390);
+  const startedAt = performance.now();
+  const draw = now => {
+    context.clearRect(0, 0, innerWidth, innerHeight);
+    particles.forEach(particle => {
+      particle.vy += .045;
+      particle.vx *= .992;
+      particle.x += particle.vx;
+      particle.y += particle.vy;
+      particle.life -= particle.decay;
+      if (particle.life <= 0) return;
+      context.globalAlpha = particle.life;
+      context.fillStyle = particle.color;
+      context.beginPath();
+      context.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+      context.fill();
+    });
+    context.globalAlpha = 1;
+    if (now - startedAt < 2600 && particles.some(particle => particle.life > 0)) requestAnimationFrame(draw);
+    else {
+      context.clearRect(0, 0, innerWidth, innerHeight);
+      canvas.classList.remove('is-active');
+    }
+  };
+  requestAnimationFrame(draw);
+};
+
+acceptButton.addEventListener('click', () => {
+  launchFireworks();
+  form.hidden = false;
+  form.classList.remove('form-opening');
+  void form.offsetWidth;
+  form.classList.add('form-opening');
+  acceptButton.setAttribute('aria-expanded', 'true');
+  acceptButton.classList.add('is-accepted');
+  acceptButton.innerHTML = '<span aria-hidden="true">✓</span> Invitación aceptada';
+  setTimeout(() => {
+    form.scrollIntoView({ behavior: reducedMotion.matches ? 'auto' : 'smooth', block: 'center' });
+    nameInput.focus({ preventScroll: true });
+  }, reducedMotion.matches ? 0 : 480);
+}, { once: true });
 for (let n = 1; n <= passes; n++) {
   const option = document.createElement('option');
   option.value = String(n);
