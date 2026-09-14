@@ -214,6 +214,11 @@ form.addEventListener('submit', e => {
     thankYou.classList.remove('is-visible');
     void thankYou.offsetWidth;
     thankYou.classList.add('is-visible');
+    form.classList.remove('form-opening');
+    form.classList.add('form-complete');
+    acceptButton.hidden = true;
+    if (reducedMotion.matches) form.hidden = true;
+    else setTimeout(() => { form.hidden = true; }, 440);
     thankYou.focus({ preventScroll: true });
     thankYou.scrollIntoView({ behavior: reducedMotion.matches ? 'auto' : 'smooth', block: 'center' });
   } catch {
@@ -247,6 +252,68 @@ if (Number.isFinite(countdownTarget)) {
     updateCountdown();
     if (Date.now() >= countdownTarget) clearInterval(countdownInterval);
   }, 1000);
+}
+
+// El pronóstico detallado se consulta cuando la fecha entra en el rango de 16 días.
+const weatherSummary = document.getElementById('weather-summary');
+const weatherFacts = document.getElementById('weather-facts');
+const weatherAdvice = document.getElementById('weather-advice');
+const weatherUpdate = document.getElementById('weather-update');
+const weatherDescription = code => {
+  if (code === 0) return 'cielo despejado';
+  if (code <= 3) return 'cielo parcialmente nublado';
+  if (code <= 48) return 'niebla';
+  if (code <= 67) return 'posible lluvia';
+  if (code <= 77) return 'precipitación fría';
+  if (code <= 82) return 'chubascos';
+  return 'posibles tormentas';
+};
+const weatherDate = new Date(`${event.date}T12:00:00-06:00`);
+const forecastAvailable = new Date(weatherDate);
+forecastAvailable.setDate(forecastAvailable.getDate() - 16);
+const daysUntilEvent = Math.ceil((weatherDate.getTime() - Date.now()) / 86400000);
+const showForecast = async () => {
+  try {
+    const endpoint = new URL('https://api.open-meteo.com/v1/forecast');
+    endpoint.search = new URLSearchParams({ latitude: '24.0393', longitude: '-104.6035', hourly: 'temperature_2m,apparent_temperature,precipitation_probability,weather_code,wind_speed_10m', timezone: 'America/Mexico_City', start_date: event.date, end_date: event.date });
+    const response = await fetch(endpoint);
+    if (!response.ok) throw new Error('forecast unavailable');
+    const data = await response.json();
+    const indices = data.hourly.time.map((time, index) => ({ time, index })).filter(item => /T(19|20|21):00$/.test(item.time)).map(item => item.index);
+    if (!indices.length) throw new Error('event hours unavailable');
+    const values = key => indices.map(index => Number(data.hourly[key][index])).filter(Number.isFinite);
+    const temperatures = values('temperature_2m');
+    const rain = Math.max(...values('precipitation_probability'));
+    const wind = Math.max(...values('wind_speed_10m'));
+    const codes = values('weather_code');
+    if (!temperatures.length || !Number.isFinite(rain) || !Number.isFinite(wind) || !codes.length) throw new Error('forecast data incomplete');
+    const minTemperature = Math.round(Math.min(...temperatures));
+    const maxTemperature = Math.round(Math.max(...temperatures));
+    weatherSummary.textContent = `Se espera ${weatherDescription(Math.max(...codes))} durante la celebración.`;
+    put('weather-temperature', `${minTemperature}–${maxTemperature} °C`);
+    put('weather-rain', `${Math.round(rain)}%`);
+    put('weather-wind', `${Math.round(wind)} km/h`);
+    const recommendations = [];
+    if (minTemperature <= 14) recommendations.push('lleva un chal o abrigo ligero');
+    if (rain >= 35) recommendations.push('considera un paraguas compacto');
+    if (wind >= 25) recommendations.push('elige un peinado resistente al viento');
+    if (!recommendations.length) recommendations.push('elige un atuendo cómodo para disfrutar toda la noche');
+    weatherAdvice.textContent = `Recomendación: ${recommendations.join(' y ')}.`;
+    weatherFacts.hidden = false;
+    weatherUpdate.textContent = 'Pronóstico para las 7:00–9:00 p. m., actualizado automáticamente con Open-Meteo.';
+  } catch {
+    weatherSummary.textContent = 'El pronóstico todavía no se puede consultar.';
+    weatherUpdate.textContent = 'Vuelve a revisar esta sección más cerca de la celebración.';
+  }
+};
+if (weatherSummary && Number.isFinite(weatherDate.getTime())) {
+  if (daysUntilEvent >= 0 && daysUntilEvent <= 16) showForecast();
+  else if (daysUntilEvent > 16) {
+    weatherSummary.textContent = `El pronóstico detallado estará disponible desde el ${forecastAvailable.toLocaleDateString('es-MX', { day: 'numeric', month: 'long' })}.`;
+  } else {
+    weatherSummary.textContent = 'La celebración ya tuvo lugar. Gracias por acompañarnos.';
+    weatherAdvice.hidden = true;
+  }
 }
 
 // Movimiento muy ligero de los adornos florales durante el recorrido.

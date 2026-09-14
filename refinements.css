@@ -23,7 +23,7 @@ h1{color:#a25850;text-shadow:0 3px 24px #cda08622;margin-block:4%;line-height:1.
 .countdown strong{color:#fff4df;font-weight:400;line-height:1.15;font-size:clamp(35px,8cqw,58px)}
 .countdown span{color:#f4dbca;letter-spacing:.04em;margin-top:7px}
 .countdown-section .secondary{color:#f8e1d3;font-size:16px;margin:14px 0 0}
-.countdown strong.digit-change{animation:number-in .45s var(--ease)}
+.countdown strong{will-change:transform,opacity,filter}.countdown strong.digit-change{animation:number-in .68s var(--ease)}
 .family{gap:30px;margin-top:36px}.family h3{font-family:var(--script);font-size:34px;margin-bottom:16px}.family p{font-size:22px;line-height:1.65;color:#674f45}
 .ornament{margin:28px 0}.ornament::before,.ornament::after{width:75px}.ornament .icon{width:17px;height:17px}
 .locations{gap:24px;margin-top:36px;align-items:stretch}
@@ -47,15 +47,16 @@ h1{color:#a25850;text-shadow:0 3px 24px #cda08622;margin-block:4%;line-height:1.
 .reveal{transition:opacity 1s var(--ease),transform 1s var(--ease)}
 .reveal.is-waiting{transform:translateY(24px);opacity:0}
 .family>div:nth-child(2),.detail-grid article:nth-child(2),.location-card:nth-child(2){transition-delay:.16s}
-@keyframes number-in{from{transform:translateY(5px);opacity:.6}to{transform:none;opacity:1}}
+@keyframes number-in{0%{transform:translateY(-12px) scale(.9);opacity:0;filter:blur(3px)}55%{transform:translateY(3px) scale(1.04);opacity:1;filter:blur(0)}100%{transform:none;opacity:1;filter:blur(0)}}
 /* El vuelo usa transformaciones; no recalcula el diseño en cada fotograma. */
 .butterfly-flight{left:5%;top:16%;animation:flight-refined 28s ease-in-out infinite;will-change:transform}
 @keyframes flight-refined{0%,100%{transform:translate(0,0) rotate(18deg)}16%{transform:translate(62cqw,10cqw) rotate(-15deg)}33%{transform:translate(30cqw,34cqw) rotate(12deg)}50%{transform:translate(63cqw,58cqw) rotate(-12deg)}67%{transform:translate(8cqw,78cqw) rotate(15deg)}84%{transform:translate(2cqw,35cqw) rotate(-10deg)}}
 .wing-left,.wing-right{animation-duration:.48s}
-.cover-glimmer{position:absolute;inset:0;z-index:2;pointer-events:none}
-.cover-glimmer i{position:absolute;width:4px;height:4px;background:#d0aa69;border-radius:50%;opacity:0;box-shadow:0 0 9px #e6c57c80;animation:glimmer 7s ease-in-out infinite}
-.cover-glimmer i:nth-child(1){left:19%;top:20%}.cover-glimmer i:nth-child(2){left:78%;top:30%;animation-delay:2s}.cover-glimmer i:nth-child(3){left:14%;top:52%;animation-delay:4s}.cover-glimmer i:nth-child(4){left:83%;top:66%;animation-delay:1s}.cover-glimmer i:nth-child(5){left:36%;top:83%;animation-delay:3s}.cover-glimmer i:nth-child(6){left:66%;top:90%;animation-delay:5s}
-@keyframes glimmer{0%,100%{opacity:0;transform:translateY(4px) scale(.5)}50%{opacity:.55;transform:translateY(-4px) scale(1)}}
+.cover-glimmer{position:absolute;left:21.5%;bottom:-1%;width:57%;height:72%;z-index:3;pointer-events:none;clip-path:polygon(42% 0,58% 0,72% 18%,100% 100%,0 100%,28% 18%)}
+.cover-glimmer i{position:absolute;width:5px;height:5px;background:#fff8cb;border-radius:50%;opacity:0;box-shadow:0 0 7px #fff,0 0 14px #f5cc70,0 0 22px #dca44e;animation:dress-glimmer 5.8s ease-in-out infinite}
+.cover-glimmer i::before,.cover-glimmer i::after{content:'';position:absolute;left:50%;top:50%;background:#fff8dc;border-radius:50%;transform:translate(-50%,-50%)}.cover-glimmer i::before{width:15px;height:1px}.cover-glimmer i::after{width:1px;height:15px}
+.cover-glimmer i:nth-child(1){left:47%;top:8%}.cover-glimmer i:nth-child(2){left:34%;top:25%;animation-delay:.5s}.cover-glimmer i:nth-child(3){left:61%;top:29%;animation-delay:1s}.cover-glimmer i:nth-child(4){left:20%;top:43%;animation-delay:1.5s}.cover-glimmer i:nth-child(5){left:47%;top:47%;animation-delay:2s}.cover-glimmer i:nth-child(6){left:76%;top:45%;animation-delay:2.5s}.cover-glimmer i:nth-child(7){left:10%;top:66%;animation-delay:3s}.cover-glimmer i:nth-child(8){left:35%;top:70%;animation-delay:3.5s}.cover-glimmer i:nth-child(9){left:62%;top:64%;animation-delay:4s}.cover-glimmer i:nth-child(10){left:88%;top:70%;animation-delay:4.5s}.cover-glimmer i:nth-child(11){left:25%;top:88%;animation-delay:5s}.cover-glimmer i:nth-child(12){left:70%;top:87%;animation-delay:5.4s}
+@keyframes dress-glimmer{0%,72%,100%{opacity:0;transform:scale(.35) rotate(0)}82%{opacity:.95;transform:scale(1.15) rotate(45deg)}90%{opacity:.25;transform:scale(.75) rotate(80deg)}}
 @media(hover:hover){.button:hover,.location-card .location-link:hover{transform:translateY(-3px);box-shadow:0 10px 20px #8f4b3928}.button:hover::after,.location-link:hover::after{transform:translateX(130%)}.location-card:hover .icon-medallion{transform:translateY(-4px)}.icon-medallion{transition:transform .5s var(--ease)}}
 @media(max-width:480px){.page-body{padding-inline:7%}.page-body section{padding:38px 0 46px}.page-body .countdown-section{padding:32px 12px 24px;border-radius:65px 65px 18px 18px}.countdown-section .eyebrow{font-size:12px}.section-title{font-size:38px}.locations{gap:26px}.location-card{max-width:100%;padding:38px 24px 24px}.family p{font-size:21px}.detail-grid{gap:18px}.detail-grid article{padding:26px 16px}.page-body .confirmation{padding-inline:5%;border-radius:24px}.guest-pass{padding-inline:16px}.guest-pass p{font-size:25px}.eyebrow{letter-spacing:.13em}.page-footer{padding-top:42px}}
 @media(prefers-reduced-motion:reduce){.butterfly-flight,.wing,.cover-glimmer i,.countdown strong.digit-change{animation:none!important}.cover-glimmer{display:none}.reveal.is-waiting{opacity:1;transform:none}.button::after,.location-link::after{display:none}}

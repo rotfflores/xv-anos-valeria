@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 100" role="img" aria-labelledby="title">
+  <title id="title">Vestido y traje formal</title>
+  <g fill="none" stroke="#b86459" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <path fill="#f8ddd6" d="M39 14c4 8 12 8 16 0l7 18-9 12 17 43H24l17-43-9-12 7-18Z"/>
+    <path d="M39 14 47 28l8-14M35 27h24M41 44h12M33 87l14-43 14 43"/>
+    <path fill="#f8ddd6" d="m89 15 14-5 14 5 12 16-10 8-4-10v58H91V29l-4 10-10-8 12-16Z"/>
+    <path d="m89 15 14 14 14-14M103 29v58M93 17l10 12 10-12M96 46h14M91 68h24"/>
+    <path fill="#d99082" d="m98 17 5-5 5 5-5 8-5-8Z"/>
+  </g>
+</svg>
