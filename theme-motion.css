@@ -74,7 +74,7 @@ h1,.section-title,.farewell,.page-footer>p,.thank-you h3{font-family:var(--scrip
 /* Guirnalda creada para ocupar únicamente la franja señalada. */
 .floral-seam{
   position:relative;
-  z-index:4;
+  z-index:0;
   width:96%;
   height:auto;
   margin:0 auto;
@@ -96,7 +96,7 @@ h1,.section-title,.farewell,.page-footer>p,.thank-you h3{font-family:var(--scrip
 /* La misma guirnalda separa cada sección sin invadir los paneles. */
 .section-floral-divider{
   position:relative;
-  z-index:3;
+  z-index:0;
   width:96%;
   margin:6px auto 12px;
   pointer-events:none
@@ -139,12 +139,14 @@ h1,.section-title,.farewell,.page-footer>p,.thank-you h3{font-family:var(--scrip
 .section-floral-divider{
   isolation:isolate;
   transform:translateY(0);
-  transition:opacity .78s ease,transform .78s cubic-bezier(.22,.61,.36,1)
+  transition:opacity .9s ease,filter .9s ease,transform .9s ease
 }
-.section-floral-divider.is-waiting.from-below{opacity:0;transform:translateY(18px)}
-.section-floral-divider.is-waiting.from-above{opacity:0;transform:translateY(-18px)}
+.section-floral-divider.is-waiting.from-below,
+.section-floral-divider.is-waiting.from-above{opacity:0;filter:blur(3px);transform:scale(.98)}
 .glass-floral-wrap{z-index:1}
 .glass-floral-wrap>section{z-index:3!important}
+.page-body>section,
+.page-body>.glass-floral-wrap{z-index:2}
 
 /* Pase con cristal rosa tenue, sin degradado. */
 .confirmation .guest-pass{
@@ -238,7 +240,79 @@ h1,.section-title,.farewell,.page-footer>p,.thank-you h3{font-family:var(--scrip
   text-shadow:none
 }
 .page-footer>span{font-size:12px;letter-spacing:.035em;color:#84655f}
+
+/* Halo cálido solo en la caligrafía exterior a los cristales y al encabezado. */
+.family-section>.section-title,
+.family h3,
+.event-locations>.section-title,
+.weather-section>.section-title,
+.celebration-details>.section-title{
+  animation:script-light 6.8s ease-in-out infinite;
+  animation-delay:0s;
+  text-shadow:
+    0 0 2px #fff,
+    0 0 12px rgba(255,232,164,.78),
+    0 0 24px rgba(190,92,72,.48),
+    0 0 34px rgba(255,207,122,.25)
+}
+@keyframes script-light{
+  0%,100%{text-shadow:0 0 2px rgba(255,255,255,.96),0 0 10px rgba(255,232,164,.62),0 0 21px rgba(190,92,72,.36)}
+  50%{text-shadow:0 0 4px #fff,0 0 17px rgba(255,232,151,.95),0 0 31px rgba(190,92,72,.62),0 0 42px rgba(255,207,122,.32)}
+}
+
+/* Las luciérnagas pertenecen al documento y se quedan en zonas concretas al hacer scroll. */
+.firefly-layer{
+  position:absolute;
+  z-index:6;
+  top:0;
+  left:50%;
+  width:100%;
+  height:100%;
+  transform:translateX(-50%);
+  overflow:hidden;
+  pointer-events:none
+}
+.invitation,.page-body{position:relative;z-index:1}
+.firefly-layer i{
+  position:absolute;
+  width:4px;
+  height:4px;
+  border-radius:50%;
+  background:#fff6a9;
+  opacity:.28;
+  box-shadow:0 0 5px #fffbd0,0 0 11px #f6d66c,0 0 19px rgba(246,214,108,.82);
+  animation:firefly-drift 9s ease-in-out infinite,firefly-blink 3.8s ease-in-out infinite
+}
+.firefly-layer i:nth-child(1){left:11%;top:9%;animation-delay:-1s,-.3s}
+.firefly-layer i:nth-child(2){left:81%;top:12%;animation-delay:-6s,-2.1s}
+.firefly-layer i:nth-child(3){left:18%;top:31%;animation-delay:-3s,-1.4s}
+.firefly-layer i:nth-child(4){left:76%;top:34%;animation-delay:-8s,-.8s}
+.firefly-layer i:nth-child(5){left:12%;top:55%;animation-delay:-4.5s,-2.8s}
+.firefly-layer i:nth-child(6){left:86%;top:58%;animation-delay:-7s,-1.7s}
+.firefly-layer i:nth-child(7){left:21%;top:78%;animation-delay:-2s,-3.2s}
+.firefly-layer i:nth-child(8){left:79%;top:81%;animation-delay:-9s,-2.5s}
+.firefly-layer i:nth-child(9){left:48%;top:93%;animation-delay:-5.5s,-.1s}
+.firefly-layer i:nth-child(3n){animation-name:firefly-drift-alt,firefly-blink}
+@keyframes firefly-drift{
+  0%,100%{transform:translate3d(-8px,12px,0)}
+  35%{transform:translate3d(23px,-31px,0)}
+  68%{transform:translate3d(-18px,-55px,0)}
+}
+@keyframes firefly-drift-alt{
+  0%,100%{transform:translate3d(10px,-8px,0)}
+  42%{transform:translate3d(-27px,-40px,0)}
+  76%{transform:translate3d(18px,-67px,0)}
+}
+@keyframes firefly-blink{
+  0%,100%{opacity:.2;filter:brightness(.9)}
+  45%{opacity:1;filter:brightness(1.5)}
+  62%{opacity:.38;filter:brightness(1.05)}
+}
 @media(prefers-reduced-motion:reduce){
   .butterfly-flight .butterfly,.header-butterfly-two img,
-  .footer-butterfly,.countdown strong.digit-change{animation:none!important}
+  .footer-butterfly,.countdown strong.digit-change,
+  .family-section>.section-title,.family h3,.event-locations>.section-title,
+  .weather-section>.section-title,.celebration-details>.section-title,
+  .firefly-layer i{animation:none!important}
+  .firefly-layer i{opacity:.28}
 }
