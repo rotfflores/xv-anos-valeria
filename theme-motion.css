@@ -14,31 +14,6 @@ h1,.section-title,.farewell,.page-footer>p,.thank-you h3{font-family:var(--scrip
 }
 .detail-grid article .dress-code-icon{animation:none!important}
 
-/* Manchas de color en movimiento bajo las capas claras del fondo. */
-.invitation::before{
-  content:'';
-  position:absolute;
-  inset:-20%;
-  z-index:-2;
-  pointer-events:none;
-  background:
-    radial-gradient(circle at 18% 22%,#ef9e91a8 0 10%,transparent 31%),
-    radial-gradient(circle at 82% 28%,#e5b7d19c 0 11%,transparent 32%),
-    radial-gradient(circle at 30% 76%,#f0c48794 0 12%,transparent 34%),
-    radial-gradient(circle at 76% 78%,#e9948d82 0 10%,transparent 31%);
-  filter:blur(34px) saturate(1.22);
-  opacity:.78;
-  animation:lava-header 17s ease-in-out infinite alternate;
-  will-change:transform
-}
-.page-body::before{
-  filter:blur(29px) saturate(1.28);
-  opacity:.88;
-  animation:lava-page 19s ease-in-out infinite alternate;
-  transform-origin:50% 50%;
-  will-change:transform,background-position
-}
-
 /* La imagen enviada aletea completa mientras cada contenedor marca su recorrido. */
 .butterfly-flight .butterfly,
 .header-butterfly-two img{
@@ -59,18 +34,6 @@ h1,.section-title,.farewell,.page-footer>p,.thank-you h3{font-family:var(--scrip
   filter:drop-shadow(0 6px 7px #925a4630)
 }
 
-@keyframes lava-header{
-  0%{transform:translate3d(-5%,-3%,0) rotate(-5deg) scale(1.04)}
-  35%{transform:translate3d(8%,5%,0) rotate(4deg) scale(1.16)}
-  68%{transform:translate3d(-3%,10%,0) rotate(-2deg) scale(1.09)}
-  100%{transform:translate3d(9%,-6%,0) rotate(6deg) scale(1.2)}
-}
-@keyframes lava-page{
-  0%{transform:translate3d(-4%,-2%,0) rotate(-3deg) scale(1.08);background-position:0 0}
-  33%{transform:translate3d(7%,4%,0) rotate(2deg) scale(1.16);background-position:7% 12%}
-  66%{transform:translate3d(-4%,9%,0) rotate(-2deg) scale(1.11);background-position:-8% 5%}
-  100%{transform:translate3d(8%,-5%,0) rotate(3deg) scale(1.19);background-position:11% -7%}
-}
 @keyframes butterfly-image-flap{
   from{transform:perspective(180px) rotateY(-12deg) scaleX(.82) rotate(-2deg)}
   to{transform:perspective(180px) rotateY(12deg) scaleX(1) rotate(2deg)}
@@ -88,29 +51,37 @@ h1,.section-title,.farewell,.page-footer>p,.thank-you h3{font-family:var(--scrip
 .reveal.is-waiting.from-below{opacity:0;transform:translateY(24px)}
 .reveal.is-waiting.from-above{opacity:0;transform:translateY(-24px)}
 
-/* El pase adopta el mismo vidrio cálido del panel exterior. */
+/* Pase plano y sereno para contrastar con el panel de cristal. */
 .confirmation .guest-pass{
   position:relative;
   overflow:hidden;
-  border:1px solid #fff8ed9e;
-  border-radius:26px;
-  background:
-    radial-gradient(circle at 18% 0%,#ffffff45 0,transparent 46%),
-    linear-gradient(135deg,#dfaa9970 0%,#a975706b 52%,#64484962 100%);
-  -webkit-backdrop-filter:blur(15px) saturate(125%);
-  backdrop-filter:blur(15px) saturate(125%);
-  box-shadow:inset 0 1px 0 #fffaf6c7,inset 0 -1px 0 #2c17172b,0 13px 30px #2d161631;
-  color:#fff9f0
+  border:0;
+  border-radius:22px;
+  background:#f0d8d0;
+  -webkit-backdrop-filter:none;
+  backdrop-filter:none;
+  box-shadow:0 12px 26px #3f24242b;
+  color:#704743
 }
-.confirmation .guest-pass::before{
-  content:'';
-  position:absolute;
-  left:18%;right:18%;top:13px;height:1px;
-  background:linear-gradient(90deg,transparent,#f3d5a9b8,transparent)
+.confirmation .guest-pass::before,.confirmation .guest-pass::after{display:none}
+.confirmation .guest-pass>span{color:#885d56;letter-spacing:.13em}
+.confirmation .guest-pass p{color:#8b4f4b;text-shadow:none}
+.confirmation .guest-pass small{color:#75514c}
+
+/* Acciones de color sólido, sin bordes ni brillos en degradado. */
+.details .button,
+.location-card .location-link,
+.accept-invitation,
+.confirmation-button{
+  border:0;
+  background:#a7635b;
+  box-shadow:0 8px 18px #57302830
 }
-.confirmation .guest-pass>span{color:#f7dfc8;letter-spacing:.13em}
-.confirmation .guest-pass p{color:#fff9ef;text-shadow:0 2px 14px #3d202052}
-.confirmation .guest-pass small{color:#f6dfd0}
+.accept-invitation.is-accepted{background:#89524e}
+.details .button::after,
+.location-card .location-link::after,
+.accept-invitation::after,
+.confirmation-button::after{display:none}
 
 /* Cambio perceptible y limpio de cada cifra del contador. */
 .countdown strong.digit-change{animation:countdown-tick .72s cubic-bezier(.22,.61,.36,1)}
@@ -142,6 +113,6 @@ h1,.section-title,.farewell,.page-footer>p,.thank-you h3{font-family:var(--scrip
   text-shadow:0 3px 18px #b66f6040
 }
 @media(prefers-reduced-motion:reduce){
-  .invitation::before,.page-body::before,.butterfly-flight .butterfly,
-  .header-butterfly-two img,.footer-butterfly,.countdown strong.digit-change{animation:none!important}
+  .butterfly-flight .butterfly,.header-butterfly-two img,
+  .footer-butterfly,.countdown strong.digit-change{animation:none!important}
 }
