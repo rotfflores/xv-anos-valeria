@@ -26,13 +26,15 @@ h1,.section-title,.farewell,.page-footer>p,.thank-you h3{font-family:var(--scrip
     radial-gradient(circle at 82% 28%,#e5b7d19c 0 11%,transparent 32%),
     radial-gradient(circle at 30% 76%,#f0c48794 0 12%,transparent 34%),
     radial-gradient(circle at 76% 78%,#e9948d82 0 10%,transparent 31%);
-  filter:blur(44px);
-  opacity:.58;
-  animation:lava-header 22s ease-in-out infinite alternate;
+  filter:blur(34px) saturate(1.22);
+  opacity:.78;
+  animation:lava-header 17s ease-in-out infinite alternate;
   will-change:transform
 }
 .page-body::before{
-  animation:lava-page 28s ease-in-out infinite alternate;
+  filter:blur(29px) saturate(1.28);
+  opacity:.88;
+  animation:lava-page 19s ease-in-out infinite alternate;
   transform-origin:50% 50%;
   will-change:transform,background-position
 }
@@ -58,16 +60,16 @@ h1,.section-title,.farewell,.page-footer>p,.thank-you h3{font-family:var(--scrip
 }
 
 @keyframes lava-header{
-  0%{transform:translate3d(-3%,-2%,0) rotate(-4deg) scale(1.04)}
-  35%{transform:translate3d(5%,3%,0) rotate(3deg) scale(1.13)}
-  68%{transform:translate3d(-1%,7%,0) rotate(-1deg) scale(1.08)}
-  100%{transform:translate3d(6%,-4%,0) rotate(5deg) scale(1.16)}
+  0%{transform:translate3d(-5%,-3%,0) rotate(-5deg) scale(1.04)}
+  35%{transform:translate3d(8%,5%,0) rotate(4deg) scale(1.16)}
+  68%{transform:translate3d(-3%,10%,0) rotate(-2deg) scale(1.09)}
+  100%{transform:translate3d(9%,-6%,0) rotate(6deg) scale(1.2)}
 }
 @keyframes lava-page{
-  0%{transform:translate3d(-2%,-1%,0) rotate(-2deg) scale(1.08);background-position:0 0}
-  33%{transform:translate3d(3%,2%,0) rotate(1deg) scale(1.13);background-position:3% 7%}
-  66%{transform:translate3d(-1%,5%,0) rotate(-1deg) scale(1.1);background-position:-4% 3%}
-  100%{transform:translate3d(4%,-3%,0) rotate(2deg) scale(1.15);background-position:6% -4%}
+  0%{transform:translate3d(-4%,-2%,0) rotate(-3deg) scale(1.08);background-position:0 0}
+  33%{transform:translate3d(7%,4%,0) rotate(2deg) scale(1.16);background-position:7% 12%}
+  66%{transform:translate3d(-4%,9%,0) rotate(-2deg) scale(1.11);background-position:-8% 5%}
+  100%{transform:translate3d(8%,-5%,0) rotate(3deg) scale(1.19);background-position:11% -7%}
 }
 @keyframes butterfly-image-flap{
   from{transform:perspective(180px) rotateY(-12deg) scaleX(.82) rotate(-2deg)}
@@ -78,7 +80,68 @@ h1,.section-title,.farewell,.page-footer>p,.thank-you h3{font-family:var(--scrip
   h1{font-size:clamp(53px,13.4cqw,68px);line-height:1.16;margin-block:4% 6%}
   .section-title{line-height:1.12}
 }
+
+/* Entrada y salida suave al recorrer en ambas direcciones, sin sobrepasar el punto final. */
+.reveal{
+  transition:opacity .78s ease,transform .78s cubic-bezier(.22,.61,.36,1)
+}
+.reveal.is-waiting.from-below{opacity:0;transform:translateY(24px)}
+.reveal.is-waiting.from-above{opacity:0;transform:translateY(-24px)}
+
+/* El pase adopta el mismo vidrio cálido del panel exterior. */
+.confirmation .guest-pass{
+  position:relative;
+  overflow:hidden;
+  border:1px solid #fff8ed9e;
+  border-radius:26px;
+  background:
+    radial-gradient(circle at 18% 0%,#ffffff45 0,transparent 46%),
+    linear-gradient(135deg,#dfaa9970 0%,#a975706b 52%,#64484962 100%);
+  -webkit-backdrop-filter:blur(15px) saturate(125%);
+  backdrop-filter:blur(15px) saturate(125%);
+  box-shadow:inset 0 1px 0 #fffaf6c7,inset 0 -1px 0 #2c17172b,0 13px 30px #2d161631;
+  color:#fff9f0
+}
+.confirmation .guest-pass::before{
+  content:'';
+  position:absolute;
+  left:18%;right:18%;top:13px;height:1px;
+  background:linear-gradient(90deg,transparent,#f3d5a9b8,transparent)
+}
+.confirmation .guest-pass>span{color:#f7dfc8;letter-spacing:.13em}
+.confirmation .guest-pass p{color:#fff9ef;text-shadow:0 2px 14px #3d202052}
+.confirmation .guest-pass small{color:#f6dfd0}
+
+/* Cambio perceptible y limpio de cada cifra del contador. */
+.countdown strong.digit-change{animation:countdown-tick .72s cubic-bezier(.22,.61,.36,1)}
+@keyframes countdown-tick{
+  0%{opacity:.2;transform:translateY(-14px) scale(.9);filter:blur(3px)}
+  55%{opacity:1;transform:translateY(2px) scale(1.03);filter:blur(0)}
+  100%{opacity:1;transform:none;filter:blur(0)}
+}
+
+/* Las tarjetas se apilan antes de que el texto pueda quedar recortado. */
+@media(max-width:640px){
+  .locations{grid-template-columns:1fr;justify-items:center;gap:30px}
+  .location-card{width:min(100%,380px);margin-inline:auto}
+}
+
+.farewell{
+  max-width:38%;
+  line-height:.92;
+  text-wrap:balance;
+  text-shadow:0 3px 16px #fff8f0,0 1px 0 #fff
+}
+.page-footer{padding:28px 8% 22px}
+.page-footer>p{
+  max-width:590px;
+  margin:8px auto 12px;
+  font-size:clamp(46px,8cqw,66px);
+  line-height:1.02;
+  text-wrap:balance;
+  text-shadow:0 3px 18px #b66f6040
+}
 @media(prefers-reduced-motion:reduce){
   .invitation::before,.page-body::before,.butterfly-flight .butterfly,
-  .header-butterfly-two img,.footer-butterfly{animation:none!important}
+  .header-butterfly-two img,.footer-butterfly,.countdown strong.digit-change{animation:none!important}
 }

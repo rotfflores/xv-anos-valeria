@@ -37,17 +37,36 @@ document.querySelectorAll('.invitation a[href^="#"]').forEach(link => {
   });
 });
 if ('IntersectionObserver' in window && !reducedMotion.matches) {
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) entry.target.classList.remove('is-waiting');
-      else if (entry.boundingClientRect.top >= window.innerHeight && !entry.target.contains(document.activeElement)) entry.target.classList.add('is-waiting');
-    });
-  }, { threshold: 0.08 });
-  document.querySelectorAll('.reveal, .location-card, .detail-grid article, .family > div').forEach(section => {
+  const revealElements = [...document.querySelectorAll('.reveal, .location-card, .detail-grid article, .family > div')];
+  const setRevealState = section => {
+    if (section.contains(document.activeElement)) return;
     section.classList.add('reveal');
-    if (section.getBoundingClientRect().top > window.innerHeight) section.classList.add('is-waiting');
+    const rect = section.getBoundingClientRect();
+    if (rect.bottom < -12) {
+      section.classList.add('is-waiting', 'from-above');
+      section.classList.remove('from-below');
+    } else if (rect.top > window.innerHeight + 12) {
+      section.classList.add('is-waiting', 'from-below');
+      section.classList.remove('from-above');
+    } else if (rect.bottom > 24 && rect.top < window.innerHeight - 24) {
+      section.classList.remove('is-waiting', 'from-above', 'from-below');
+    }
+  };
+  let revealFrame = 0;
+  const refreshReveals = () => {
+    revealElements.forEach(setRevealState);
+    revealFrame = 0;
+  };
+  const requestRevealRefresh = () => {
+    if (!revealFrame) revealFrame = requestAnimationFrame(refreshReveals);
+  };
+  const observer = new IntersectionObserver(requestRevealRefresh, { threshold: [0, 0.08], rootMargin: '-4% 0px -4% 0px' });
+  revealElements.forEach(section => {
+    setRevealState(section);
     observer.observe(section);
   });
+  addEventListener('scroll', requestRevealRefresh, { passive: true });
+  addEventListener('resize', requestRevealRefresh, { passive: true });
 }
 // Confirmación local; el panel y la base de datos se conectarán después.
 const form = document.getElementById('rsvp-form');
@@ -240,7 +259,8 @@ const updateCountdown = () => {
       digit.textContent = value;
       if (!reducedMotion.matches) {
         digit.classList.remove('digit-change');
-        requestAnimationFrame(() => digit.classList.add('digit-change'));
+        void digit.offsetWidth;
+        digit.classList.add('digit-change');
       }
     }
   }
