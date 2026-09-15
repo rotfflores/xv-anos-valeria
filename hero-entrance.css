@@ -1,0 +1,71 @@
+/* Entrada ceremonial por piezas para la portada. */
+.invitation .title-block,
+.invitation .message,
+.invitation .event,
+.invitation .details{animation:none}
+
+.invitation .top-left{
+  animation:hero-flower-left .95s .05s var(--ease) both,flowers-sway-left 7s 1.1s ease-in-out infinite;
+  transform-origin:0 0
+}
+.invitation .top-right{
+  animation:hero-flower-right .95s .12s var(--ease) both,flowers-sway-right 8s 1.15s ease-in-out infinite;
+  transform-origin:100% 0
+}
+.invitation .crown{
+  animation:hero-crown .9s .2s var(--ease) both,crown-glow 5s 1.15s ease-in-out infinite
+}
+.invitation .intro{animation:hero-rise .72s .5s var(--ease) both}
+.invitation #event-name{animation:hero-name 1s .68s var(--ease) both}
+.invitation .message{animation:hero-rise .85s .92s var(--ease) both}
+.invitation .weekday{animation:hero-rise .68s 1.12s var(--ease) both}
+.invitation .date span:first-child{animation:hero-from-left .72s 1.24s var(--ease) both}
+.invitation .date strong{animation:hero-day .78s 1.33s var(--ease) both}
+.invitation .date span:last-child{animation:hero-from-right .72s 1.24s var(--ease) both}
+.invitation .cover-venue{animation:hero-rise .72s 1.5s var(--ease) both}
+
+.invitation .detail:first-child .detail-icon{animation:hero-from-left .68s 1.62s var(--ease) both,dress-code-glow 4.8s 2.4s ease-in-out infinite}
+.invitation .detail:last-child .detail-icon{animation:hero-from-right .68s 1.68s var(--ease) both,glass-icon-glow-filter 4.8s 2.45s ease-in-out infinite}
+.invitation .detail:first-child h2{animation:hero-from-left .68s 1.74s var(--ease) both}
+.invitation .detail:last-child h2{animation:hero-from-right .68s 1.8s var(--ease) both}
+.invitation .detail:first-child p{animation:hero-from-left .68s 1.84s var(--ease) both}
+.invitation .detail:last-child p{animation:hero-from-right .68s 1.9s var(--ease) both}
+.invitation .detail:first-child .button{animation:hero-from-left .75s 1.98s var(--ease) both,cover-button-glow 4.8s 2.8s ease-in-out infinite}
+.invitation .detail:last-child .button{animation:hero-from-right .75s 2.05s var(--ease) both,cover-button-glow 4.8s 2.87s ease-in-out infinite}
+
+.invitation .cover-art .princess{
+  animation:hero-princess 1.12s 1.72s var(--ease) both,princess-breathe 6s 2.9s ease-in-out infinite
+}
+.invitation .cover-art .bottom-left{
+  animation:hero-flower-left .9s 2.05s var(--ease) both,flowers-sway-left 7s 3s ease-in-out infinite
+}
+.invitation .cover-art .bottom-right{
+  animation:hero-flower-right .9s 2.12s var(--ease) both,flowers-sway-right 8s 3.1s ease-in-out infinite
+}
+.invitation .farewell{animation:hero-name .82s 2.25s var(--ease) both}
+.invitation .cover-glimmer{animation:hero-fade .65s 2.55s ease both}
+.invitation .butterfly-flight{
+  animation:hero-fade .7s 2.2s ease both,flight-refined 28s 2.2s ease-in-out infinite
+}
+.invitation .header-butterfly-two{
+  animation:hero-fade .7s 2.35s ease both,butterfly-two-route 15s 2.35s ease-in-out infinite
+}
+
+@keyframes hero-rise{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+@keyframes hero-from-left{from{opacity:0;transform:translateX(-24px)}to{opacity:1;transform:none}}
+@keyframes hero-from-right{from{opacity:0;transform:translateX(24px)}to{opacity:1;transform:none}}
+@keyframes hero-crown{from{opacity:0;transform:translateY(-24px) scale(.84);filter:drop-shadow(0 0 0 transparent)}to{opacity:1;transform:none;filter:drop-shadow(0 5px 13px #d4aa4f55)}}
+@keyframes hero-name{from{opacity:0;transform:translateY(16px) scale(.96);filter:blur(5px)}to{opacity:1;transform:none;filter:blur(0)}}
+@keyframes hero-day{0%{opacity:0;transform:translateY(-18px) scale(.72)}70%{opacity:1;transform:translateY(2px) scale(1.04)}100%{opacity:1;transform:none}}
+@keyframes hero-princess{from{opacity:0;transform:translateY(48px) scale(.94)}to{opacity:1;transform:none}}
+@keyframes hero-flower-left{from{opacity:0;transform:translate(-34px,18px) rotate(-4deg) scale(.88)}to{opacity:1;transform:none}}
+@keyframes hero-flower-right{from{opacity:0;transform:translate(34px,18px) rotate(4deg) scale(.88)}to{opacity:1;transform:none}}
+@keyframes hero-fade{from{opacity:0}to{opacity:1}}
+
+@media(prefers-reduced-motion:reduce){
+  .invitation .top-left,.invitation .top-right,.invitation .crown,.invitation .intro,
+  .invitation #event-name,.invitation .message,.invitation .weekday,.invitation .date span,
+  .invitation .date strong,.invitation .cover-venue,.invitation .detail>*,.invitation .princess,
+  .invitation .bottom-left,.invitation .bottom-right,.invitation .farewell,.invitation .cover-glimmer,
+  .invitation .butterfly-flight,.invitation .header-butterfly-two{animation:none!important;opacity:1;transform:none}
+}
