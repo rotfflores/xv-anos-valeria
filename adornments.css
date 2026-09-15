@@ -162,3 +162,18 @@ body{font-family:var(--serif);background:linear-gradient(135deg,#f3ddd6,#edc7bf 
 .detail-grid article .dress-code-icon{filter:brightness(0) saturate(100%) invert(88%) sepia(31%) saturate(715%) hue-rotate(345deg) brightness(108%) contrast(96%) drop-shadow(0 0 4px #fff1bd9c) drop-shadow(0 0 10px #eab45e7a);animation:dress-code-glow 4.8s ease-in-out infinite}
 @keyframes dress-code-glow{0%,100%{filter:brightness(0) saturate(100%) invert(88%) sepia(31%) saturate(715%) hue-rotate(345deg) brightness(108%) contrast(96%) drop-shadow(0 0 4px #fff1bd9c) drop-shadow(0 0 10px #eab45e7a)}50%{filter:brightness(0) saturate(100%) invert(94%) sepia(38%) saturate(780%) hue-rotate(341deg) brightness(112%) contrast(98%) drop-shadow(0 0 8px #fff7d8db) drop-shadow(0 0 19px #eab45eb5)}}
 @media(prefers-reduced-motion:reduce){.detail-grid article .dress-code-icon{animation:none!important}}
+
+/* Arreglos florales grandes, alineados con los cristales y parcialmente ocultos tras sus bordes. */
+.countdown-floral{width:292px;right:-196px;top:37%;bottom:auto;transform:translate3d(0,var(--parallax-y),0) rotate(7deg)}
+.locations-floral{width:315px;right:-218px;top:39%;transform:translate3d(0,var(--parallax-y),0) rotate(7deg)}
+.weather-floral{width:275px;right:-194px;top:35%;transform:translate3d(0,var(--parallax-y),0) rotate(9deg)}
+.details-floral{width:292px;left:-205px;top:39%;bottom:auto;transform:translate3d(0,var(--parallax-y),0) rotate(-9deg)}
+.confirmation-floral{width:305px;right:-214px;top:47%;bottom:auto;transform:translate3d(0,var(--parallax-y),0) rotate(7deg)}
+.countdown-floral,.locations-floral,.weather-floral,.details-floral,.confirmation-floral{filter:saturate(1.06) drop-shadow(0 12px 22px #6b38252b)}
+@media(max-width:480px){
+  .countdown-floral{width:242px;right:-164px;top:38%}
+  .locations-floral{width:252px;right:-176px;top:40%}
+  .weather-floral{width:232px;right:-164px;top:37%}
+  .details-floral{width:244px;left:-171px;top:40%}
+  .confirmation-floral{width:254px;right:-179px;top:48%}
+}
