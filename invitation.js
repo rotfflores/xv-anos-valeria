@@ -39,7 +39,10 @@ document.querySelectorAll('.invitation a[href^="#"]').forEach(link => {
 if ('IntersectionObserver' in window && !reducedMotion.matches) {
   const revealElements = [...document.querySelectorAll('.reveal, .location-card, .detail-grid article, .family > div')];
   const setRevealState = section => {
-    if (section.contains(document.activeElement)) return;
+    if (section.contains(document.activeElement)) {
+      section.classList.remove('is-waiting', 'from-above', 'from-below');
+      return;
+    }
     section.classList.add('reveal');
     const rect = section.getBoundingClientRect();
     if (rect.bottom < -12) {
