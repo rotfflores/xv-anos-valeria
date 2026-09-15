@@ -8,11 +8,9 @@ body,button,input,select,textarea{font-family:var(--serif)}
 h1,.section-title,.farewell,.page-footer>p,.thank-you h3{font-family:var(--script)}
 
 /* La ilustración de vestimenta conserva sus colores originales y su definición. */
-.dress-code-image,
-.detail-grid article .dress-code-icon{
+.dress-code-image{
   filter:none!important
 }
-.detail-grid article .dress-code-icon{animation:none!important}
 
 /* La imagen enviada aletea completa mientras cada contenedor marca su recorrido. */
 .butterfly-flight .butterfly,
@@ -51,37 +49,161 @@ h1,.section-title,.farewell,.page-footer>p,.thank-you h3{font-family:var(--scrip
 .reveal.is-waiting.from-below{opacity:0;transform:translateY(24px)}
 .reveal.is-waiting.from-above{opacity:0;transform:translateY(-24px)}
 
-/* Pase plano y sereno para contrastar con el panel de cristal. */
+/* Vestido y flores conservan la ilustración completa, sin máscara ni degradado. */
+.invitation::after{display:none!important}
+.cover-art .princess,
+.cover-art .bottom-left,
+.cover-art .bottom-right{
+  -webkit-mask-image:none!important;
+  mask-image:none!important
+}
+.page-body{margin-top:-10px!important;padding-top:62px;background:linear-gradient(180deg,#f3c4bb 0,#f3c4bb 42px,#f6d3cc 190px,#fff9f5 510px,#fff 58%,#fff7f1)}
+
+/* Textura de acuarela enviada por la usuaria como fondo continuo. */
+.page{
+  background-color:#efa49a;
+  background-image:url('assets/fondo-acuarela-salmon.png');
+  background-position:center top;
+  background-repeat:no-repeat;
+  background-size:100% 100%
+}
+.invitation,
+.page-body{background:transparent!important}
+.page-body::before{display:none!important}
+
+/* Guirnalda creada para ocupar únicamente la franja señalada. */
+.floral-seam{
+  position:relative;
+  z-index:4;
+  width:96%;
+  height:auto;
+  margin:0 auto;
+  margin-left:auto;
+  margin-right:auto;
+  overflow:hidden;
+  pointer-events:none;
+  isolation:isolate
+}
+.floral-seam::after{display:none}
+.floral-seam-garland{
+  display:block;
+  width:100%;
+  height:auto;
+  object-fit:contain;
+  filter:drop-shadow(0 8px 15px rgba(105,56,45,.12))
+}
+
+/* La misma guirnalda separa cada sección sin invadir los paneles. */
+.section-floral-divider{
+  position:relative;
+  z-index:3;
+  width:96%;
+  margin:6px auto 12px;
+  pointer-events:none
+}
+.section-floral-divider img{
+  display:block;
+  width:100%;
+  height:auto;
+  filter:drop-shadow(0 7px 13px rgba(105,56,45,.1))
+}
+
+/* Los arreglos originales del encabezado quedan completos dentro del lienzo. */
+.cover-art .bottom-left{left:1.5%!important;bottom:0!important;width:37%!important}
+.cover-art .bottom-right{right:1.5%!important;bottom:0!important;width:34%!important}
+
+/* Los adornos permanecen estáticos y siempre debajo del vidrio durante el scroll. */
+.page-body section,
+.glass-floral-wrap{isolation:isolate}
+.page-body section>.section-floral,
+.glass-floral-wrap>.section-floral{
+  z-index:-1!important;
+  --parallax-y:0px!important;
+  will-change:auto!important;
+  transition:opacity 1.1s ease!important
+}
+.page-body section>:not(.section-floral),
+.glass-floral-wrap>section{
+  position:relative;
+  z-index:2
+}
+.countdown-section,
+.confirmation,
+.locations,
+.weather-card,
+.detail-grid article{
+  z-index:2!important
+}
+
+/* Cada guirnalda anima con el scroll sin entrar en la capa de los cristales. */
+.section-floral-divider{
+  isolation:isolate;
+  transform:translateY(0);
+  transition:opacity .78s ease,transform .78s cubic-bezier(.22,.61,.36,1)
+}
+.section-floral-divider.is-waiting.from-below{opacity:0;transform:translateY(18px)}
+.section-floral-divider.is-waiting.from-above{opacity:0;transform:translateY(-18px)}
+.glass-floral-wrap{z-index:1}
+.glass-floral-wrap>section{z-index:3!important}
+
+/* Pase con cristal rosa tenue, sin degradado. */
 .confirmation .guest-pass{
   position:relative;
   overflow:hidden;
-  border:0;
+  border:1px solid rgba(255,255,255,.6);
   border-radius:22px;
-  background:#f0d8d0;
-  -webkit-backdrop-filter:none;
-  backdrop-filter:none;
-  box-shadow:0 12px 26px #3f24242b;
+  background:rgba(240,216,208,.34);
+  -webkit-backdrop-filter:blur(13px) saturate(108%);
+  backdrop-filter:blur(13px) saturate(108%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.72),0 12px 26px #3f242426;
   color:#704743
 }
 .confirmation .guest-pass::before,.confirmation .guest-pass::after{display:none}
-.confirmation .guest-pass>span{color:#885d56;letter-spacing:.13em}
-.confirmation .guest-pass p{color:#8b4f4b;text-shadow:none}
-.confirmation .guest-pass small{color:#75514c}
+.confirmation .guest-pass>span{color:#fffaf4;letter-spacing:.13em;text-shadow:0 1px 8px #4c29296b}
+.confirmation .guest-pass p{color:#fff;text-shadow:0 2px 12px #4c292975}
+.confirmation .guest-pass small{color:#fffaf4;text-shadow:0 1px 8px #4c29296b}
 
-/* Acciones de color sólido, sin bordes ni brillos en degradado. */
+.invitation .detail:first-child .button{animation:hero-from-left .75s 1.98s var(--ease) both!important}
+.invitation .detail:last-child .button{animation:hero-from-right .75s 2.05s var(--ease) both!important}
+
+/* Todas las acciones comparten el mismo salmón sólido. */
 .details .button,
 .location-card .location-link,
 .accept-invitation,
-.confirmation-button{
+.confirmation-button,
+.accept-invitation.is-accepted{
   border:0;
   background:#a7635b;
-  box-shadow:0 8px 18px #57302830
+  -webkit-backdrop-filter:none;
+  backdrop-filter:none;
+  box-shadow:0 10px 22px rgba(92,48,48,.22);
+  color:#fffaf5;
+  text-shadow:none
 }
-.accept-invitation.is-accepted{background:#89524e}
+.details .button::before,
 .details .button::after,
+.location-card .location-link::before,
 .location-card .location-link::after,
+.accept-invitation::before,
 .accept-invitation::after,
+.confirmation-button::before,
 .confirmation-button::after{display:none}
+.details .button:hover,
+.location-card .location-link:hover,
+.accept-invitation:hover,
+.confirmation-button:hover{
+  background:#9b5952;
+  transform:translateY(-2px);
+  box-shadow:0 13px 26px rgba(92,48,48,.25)
+}
+.details .button:active,
+.location-card .location-link:active,
+.accept-invitation:active,
+.confirmation-button:active{
+  background:#914f49;
+  transform:translateY(1px) scale(.99);
+  box-shadow:0 5px 12px rgba(92,48,48,.18)
+}
 
 /* Cambio perceptible y limpio de cada cifra del contador. */
 .countdown strong.digit-change{animation:countdown-tick .72s cubic-bezier(.22,.61,.36,1)}
@@ -96,6 +218,7 @@ h1,.section-title,.farewell,.page-footer>p,.thank-you h3{font-family:var(--scrip
   .locations{grid-template-columns:1fr;justify-items:center;gap:30px}
   .location-card{width:min(100%,380px);margin-inline:auto}
 }
+@media(max-width:480px){.floral-seam{width:96%}}
 
 .farewell{
   max-width:38%;
@@ -103,15 +226,18 @@ h1,.section-title,.farewell,.page-footer>p,.thank-you h3{font-family:var(--scrip
   text-wrap:balance;
   text-shadow:0 3px 16px #fff8f0,0 1px 0 #fff
 }
-.page-footer{padding:28px 8% 22px}
+.page-footer{margin-top:34px;padding:24px 8% 20px;border-top:1px solid rgba(125,79,70,.25)}
 .page-footer>p{
-  max-width:590px;
-  margin:8px auto 12px;
-  font-size:clamp(46px,8cqw,66px);
-  line-height:1.02;
-  text-wrap:balance;
-  text-shadow:0 3px 18px #b66f6040
+  max-width:none;
+  margin:0 0 9px;
+  color:#704c46;
+  font-family:var(--serif);
+  font-size:17px;
+  font-weight:600;
+  line-height:1.35;
+  text-shadow:none
 }
+.page-footer>span{font-size:12px;letter-spacing:.035em;color:#84655f}
 @media(prefers-reduced-motion:reduce){
   .butterfly-flight .butterfly,.header-butterfly-two img,
   .footer-butterfly,.countdown strong.digit-change{animation:none!important}
