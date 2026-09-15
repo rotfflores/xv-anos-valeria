@@ -1,0 +1,84 @@
+/* Tipografía solicitada y movimiento ambiental de la invitación. */
+:root{
+  --serif:'PT Serif Caption',Georgia,serif;
+  --script:'Monsieur La Doulaise','Brush Script MT',cursive
+}
+body,button,input,select,textarea{font-family:var(--serif)}
+.rsvp-form input,.rsvp-form select,.rsvp-form textarea{font-family:var(--serif)}
+h1,.section-title,.farewell,.page-footer>p,.thank-you h3{font-family:var(--script)}
+
+/* La ilustración de vestimenta conserva sus colores originales y su definición. */
+.dress-code-image,
+.detail-grid article .dress-code-icon{
+  filter:none!important
+}
+.detail-grid article .dress-code-icon{animation:none!important}
+
+/* Manchas de color en movimiento bajo las capas claras del fondo. */
+.invitation::before{
+  content:'';
+  position:absolute;
+  inset:-20%;
+  z-index:-2;
+  pointer-events:none;
+  background:
+    radial-gradient(circle at 18% 22%,#ef9e91a8 0 10%,transparent 31%),
+    radial-gradient(circle at 82% 28%,#e5b7d19c 0 11%,transparent 32%),
+    radial-gradient(circle at 30% 76%,#f0c48794 0 12%,transparent 34%),
+    radial-gradient(circle at 76% 78%,#e9948d82 0 10%,transparent 31%);
+  filter:blur(44px);
+  opacity:.58;
+  animation:lava-header 22s ease-in-out infinite alternate;
+  will-change:transform
+}
+.page-body::before{
+  animation:lava-page 28s ease-in-out infinite alternate;
+  transform-origin:50% 50%;
+  will-change:transform,background-position
+}
+
+/* La imagen enviada aletea completa mientras cada contenedor marca su recorrido. */
+.butterfly-flight .butterfly,
+.header-butterfly-two img{
+  display:block;
+  width:100%;
+  height:auto;
+  object-fit:contain;
+  filter:drop-shadow(0 6px 8px #80514232);
+  animation:butterfly-image-flap .58s ease-in-out infinite alternate;
+  transform-origin:50% 52%
+}
+.footer-butterfly{
+  display:inline-block;
+  width:68px;
+  height:68px;
+  object-fit:contain;
+  animation:footer-hover 4.5s ease-in-out infinite;
+  filter:drop-shadow(0 6px 7px #925a4630)
+}
+
+@keyframes lava-header{
+  0%{transform:translate3d(-3%,-2%,0) rotate(-4deg) scale(1.04)}
+  35%{transform:translate3d(5%,3%,0) rotate(3deg) scale(1.13)}
+  68%{transform:translate3d(-1%,7%,0) rotate(-1deg) scale(1.08)}
+  100%{transform:translate3d(6%,-4%,0) rotate(5deg) scale(1.16)}
+}
+@keyframes lava-page{
+  0%{transform:translate3d(-2%,-1%,0) rotate(-2deg) scale(1.08);background-position:0 0}
+  33%{transform:translate3d(3%,2%,0) rotate(1deg) scale(1.13);background-position:3% 7%}
+  66%{transform:translate3d(-1%,5%,0) rotate(-1deg) scale(1.1);background-position:-4% 3%}
+  100%{transform:translate3d(4%,-3%,0) rotate(2deg) scale(1.15);background-position:6% -4%}
+}
+@keyframes butterfly-image-flap{
+  from{transform:perspective(180px) rotateY(-12deg) scaleX(.82) rotate(-2deg)}
+  to{transform:perspective(180px) rotateY(12deg) scaleX(1) rotate(2deg)}
+}
+
+@media(max-width:480px){
+  h1{font-size:clamp(53px,13.4cqw,68px);line-height:1.16;margin-block:4% 6%}
+  .section-title{line-height:1.12}
+}
+@media(prefers-reduced-motion:reduce){
+  .invitation::before,.page-body::before,.butterfly-flight .butterfly,
+  .header-butterfly-two img,.footer-butterfly{animation:none!important}
+}

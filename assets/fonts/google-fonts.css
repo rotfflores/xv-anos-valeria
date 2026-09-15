@@ -40,5 +40,26 @@
   font-display: swap;
   src: url(pinyon-script-regular.ttf) format('truetype');
 }
+@font-face {
+  font-family: 'PT Serif Caption';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(pt-serif-caption-latin.woff2) format('woff2');
+}
+@font-face {
+  font-family: 'PT Serif Caption';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url(pt-serif-caption-italic-latin.woff2) format('woff2');
+}
+@font-face {
+  font-family: 'Monsieur La Doulaise';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(monsieur-la-doulaise-latin.woff2) format('woff2');
+}
 
 

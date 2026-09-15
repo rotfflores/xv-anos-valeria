@@ -24,7 +24,7 @@
 .invitation .date span:last-child{animation:hero-from-right .72s 1.24s var(--ease) both}
 .invitation .cover-venue{animation:hero-rise .72s 1.5s var(--ease) both}
 
-.invitation .detail:first-child .detail-icon{animation:hero-from-left .68s 1.62s var(--ease) both,dress-code-glow 4.8s 2.4s ease-in-out infinite}
+.invitation .detail:first-child .detail-icon{animation:hero-from-left .68s 1.62s var(--ease) both}
 .invitation .detail:last-child .detail-icon{animation:hero-from-right .68s 1.68s var(--ease) both,glass-icon-glow-filter 4.8s 2.45s ease-in-out infinite}
 .invitation .detail:first-child h2{animation:hero-from-left .68s 1.74s var(--ease) both}
 .invitation .detail:last-child h2{animation:hero-from-right .68s 1.8s var(--ease) both}
